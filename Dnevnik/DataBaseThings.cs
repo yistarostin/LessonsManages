@@ -6,7 +6,7 @@ using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.IO;
 
-namespace TimeTable
+namespace Dnevnik
 {
 
     [Table(Name = "Lessons")]
@@ -121,50 +121,21 @@ namespace TimeTable
                         }
                     }
                     les.Notes = "";
-                    les.Name = changes[index];
                 }
+                les.Name = changes[index];
                 ++index;
             }
             db.SubmitChanges();
         }
-        public void SubmitHomeworkPointChanges(int homeworkid, HomeworkPointInfo[] hwpi) //TODO
+        public void SubmitHomeworkPointChanges(HomeworkPointInfo[] hwpi) //TODO
         {
+            int hwpindex = (ChoosenLessonID - 1) * 5 + 1;
             foreach (HomeworkPoint les in HomeworkPoints)
             {
-
+                
             }
             db.SubmitChanges();
         }
     }
 
-    static class Sample
-    {
-        static void Main()
-        {
-            DataContext db = new DataContext("C:\\lessons\\lessonsdatabase.mdf");
-            Table<Lesson> Lessons = db.GetTable<Lesson>();
-            Table<HomeworkPoint> HomeworkPoints = db.GetTable<HomeworkPoint>();
-            /*db.CreateDatabase();
-            for(int i = 1; i <= 48; ++i)
-            {
-                Lesson les = new Lesson();
-                les.Notes = "";
-                les.Name = "";
-                les.LessonID = i;
-                for(int j = 1; j <= 5; ++j)
-                {
-                    HomeworkPoint hwp = new HomeworkPoint();
-                    hwp.LessonID = i;
-                    hwp.HomeworkPointID = (5 * (i-1)) + j;
-                    hwp.isDone = false;
-                    hwp.Description = "";
-                    HomeworkPoints.InsertOnSubmit(hwp);
-                }
-                Lessons.InsertOnSubmit(les);
-                db.SubmitChanges();
-            }*/
-            db.SubmitChanges();
-            return;
-        }
-    }
 }
