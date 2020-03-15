@@ -40,7 +40,7 @@ namespace Dnevnik
         public int ChoosenLessonID;
         public ConnectionWithDataBase()
         {
-            db = new DataContext("C:\\lessons\\lessonsdatabase.mdf");
+            db = new DataContext("C:\\lessons\\lessonsdatabaseee.mdf");
             Lessons = db.GetTable<Lesson>();
             HomeworkPoints = db.GetTable<HomeworkPoint>();
             ChoosenLessonID = 0;
@@ -130,9 +130,16 @@ namespace Dnevnik
         public void SubmitHomeworkPointChanges(HomeworkPointInfo[] hwpi) //TODO
         {
             int hwpindex = (ChoosenLessonID - 1) * 5 + 1;
-            foreach (HomeworkPoint les in HomeworkPoints)
+            int arrayindex = 0;
+            foreach (HomeworkPoint hwp in HomeworkPoints)
             {
-                
+                if (hwp.HomeworkPointID == hwpindex)
+                {
+                    hwp.isDone = hwpi[arrayindex].IsDone;
+                    hwp.Description = hwpi[arrayindex].Name;
+                    ++hwpindex;
+                    ++arrayindex;
+                }
             }
             db.SubmitChanges();
         }
